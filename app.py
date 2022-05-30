@@ -8,11 +8,10 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 app = FastAPI()
-
-security = HTTPBasic()
 templates = Jinja2Templates("""<html>
         <h1>Welcome {{name}}! You are {{age}}</h1>
 </html>""")
+security = HTTPBasic()
 
 
 @app.get("/start", response_class=HTMLResponse)
@@ -24,7 +23,7 @@ def start():
     """
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_date = secrets.compare_digest(datetime.date.today() - datetime.date(credentials.username), 16)
+    correct_date = secrets.compare_digest(datetime.date.today() - datetime.date(credentials.password), 16)
     if 16 > (correct_date):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -35,7 +34,7 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 
 @app.get("/check")
 def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):
-    return {"name": credentials.username, "age": datetime.date.today() - datetime.date(credentials.username)}
+    return {"username": credentials.username, "password": datetime.date.today() - datetime.date(credentials.password)}
 #
 # @app.get("/check", response_class=HTMLResponse)
 # def check(name: str, date: str):
