@@ -33,13 +33,11 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
         )
     return credentials.username
 
-@app.get("/check")
-def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):
+@app.post("/check")
+def read_current_user(credentials: HTTPBasicCredentials = Depends(security), response_class=HTMLResponse):
     # date_obj = datetime.strp(credentials.password, '%y-%m-%d')
     # correct_date = datetime.date.today() - date_obj
-    return """<html>
-        <h1>Welcome """, credentials.username, """! You are """, 16, """</h1>
-</html>"""
+    return templates.render(name=credentials.username, age=16)
 #
 # @app.get("/check", response_class=HTMLResponse)
 # def check(name: str, date: str):
