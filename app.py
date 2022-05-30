@@ -34,10 +34,8 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials.username
 
 @app.post("/check")
-def read_current_user(credentials: HTTPBasicCredentials = Depends(security), response_class=HTMLResponse):
-    # date_obj = datetime.strp(credentials.password, '%y-%m-%d')
-    # correct_date = datetime.date.today() - date_obj
-    return templates.render(name=credentials.username, age=16)
+def read_current_user(username: str = Depends(get_current_username)):
+    return {"username": username}
 #
 # @app.get("/check", response_class=HTMLResponse)
 # def check(name: str, date: str):
