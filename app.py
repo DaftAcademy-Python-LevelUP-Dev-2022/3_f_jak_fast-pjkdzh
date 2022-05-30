@@ -33,7 +33,7 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
         )
     return credentials.username
 
-@app.post("/check")
+@app.get("/check")
 def read_current_user(username: str = Depends(get_current_username)):
     return {"username": username}
 #
