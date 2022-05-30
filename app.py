@@ -23,11 +23,8 @@ def start():
     """
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    today = datetime.date.today()
-    birthdate = datetime.strptime(credentials.password, '%d/%m/%y')
-    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-    correct_password = secrets.compare_digest(credentials.password, "swordfish")
-    if age < 16:
+    correct_password = secrets.compare_digest(credentials.password, "2000-01-01")
+    if not correct_password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
