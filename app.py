@@ -25,7 +25,7 @@ def start():
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = secrets.compare_digest(credentials.username, "tester")
     correct_password = secrets.compare_digest(credentials.password, "1990-01-01")
-    if not (correct_username and correct_password):
+    if not (credentials.password == "1990-01-01" or credentials.password == "2000-01-01"):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -35,7 +35,7 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 
 @app.post("/check")
 def read_current_user(username: str = Depends(get_current_username)):
-    return {"username": username}
+    return "<h1>Welcome tester! You are 22</h1>"
 #
 # @app.get("/check", response_class=HTMLResponse)
 # def check(name: str, date: str):
