@@ -1,3 +1,5 @@
+import datetime
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -14,4 +16,7 @@ def start():
 
 @app.post("/check/{name}/{date}", response_class=HTMLResponse)
 def check(name: str, date: str):
-    return {"sample_variable": name}
+    age = datetime.date.today() - datetime.date(date)
+    return """
+    <html> <h1>Welcome """, name, """! You are """,age,"""</h1> </html>
+    """
