@@ -24,7 +24,7 @@ def start():
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     correct_date = secrets.compare_digest(credentials.password, "swordfish")
-    if 16 > (correct_date):
+    if (correct_date):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
