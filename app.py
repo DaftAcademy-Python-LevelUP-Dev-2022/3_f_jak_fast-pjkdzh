@@ -13,5 +13,5 @@ def start():
     """
 
 @app.post("/check/{name}/{date}", response_class=HTMLResponse)
-def check(name: str, date: date):
-    return {"sample_variable": sample_variable}
+def check(name: str, date: str):
+    return {"sample_variable": name}
