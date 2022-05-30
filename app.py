@@ -23,7 +23,7 @@ def start():
     """
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_password = secrets.compare_digest(credentials.password, "2000-01-01")
+    correct_password = secrets.compare_digest(credentials.password, "1990-01-01")
     if not correct_password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
