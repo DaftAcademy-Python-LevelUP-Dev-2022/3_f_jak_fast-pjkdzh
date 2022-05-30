@@ -23,7 +23,8 @@ def start():
     """
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_date = secrets.compare_digest(datetime.date.today() - datetime.date(credentials.password), 16)
+    date_obj = datetime.strp(credentials.password, '%y-%m-%d')
+    correct_date = datetime.date.today() - date_obj
     if 16 > (correct_date):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -34,7 +35,9 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 
 @app.get("/check")
 def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):
-    return {"username": credentials.username, "password": 16}
+    date_obj = datetime.strp(credentials.password, '%y-%m-%d')
+    correct_date = datetime.date.today() - date_obj
+    return {"username": credentials.username, "password": correct_date}
 #
 # @app.get("/check", response_class=HTMLResponse)
 # def check(name: str, date: str):
