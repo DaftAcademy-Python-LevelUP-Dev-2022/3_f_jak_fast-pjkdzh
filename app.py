@@ -37,6 +37,6 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 
 @app.post("/check")
 def read_current_user(username: str = Depends(get_current_username)):
-    return "<h1>Welcome tester! You are 22</h1>"
+    return """ <html><h1>Welcome tester! You are 22</h1></html>"""
 
 
