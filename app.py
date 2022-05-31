@@ -7,9 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 app = FastAPI()
-templates = Jinja2Templates("""<html>
-        <h1>Welcome {{name}}! You are {{age}}</h1>
-</html>""")
+templates = Jinja2Templates(directory="templates")
 security = HTTPBasic()
 list = []
 @app.get("/start", response_class=HTMLResponse)
@@ -56,7 +54,7 @@ def login(request: Request, credentials: HTTPBasicCredentials = Depends(security
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
     return templates.TemplateResponse(
-        name='user_age_response.html.j2',
+        name='age.html.j2',
         context={'request': request, 'name': name, 'age': age},
         status_code=status.HTTP_200_OK
     )
