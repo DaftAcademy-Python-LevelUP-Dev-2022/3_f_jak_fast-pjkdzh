@@ -44,7 +44,7 @@ from typing import List
 from fastapi import FastAPI, Query
 
 @app.get("/info/")
-def read_items(format: str = Query("default")):
+def read_items(format: str):
     query_items = {"user_agent": format}
     return query_items
 
