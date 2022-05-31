@@ -12,7 +12,7 @@ templates = Jinja2Templates("""<html>
         <h1>Welcome {{name}}! You are {{age}}</h1>
 </html>""")
 security = HTTPBasic()
-
+list = []
 
 @app.get("/start", response_class=HTMLResponse)
 def start():
@@ -40,3 +40,20 @@ def read_current_user(username: str = Depends(get_current_username)):
     return """ <html><h1>Welcome tester! You are 22</h1></html>"""
 
 
+@app.put("/save/{string}")
+def read_current_user(string: str):
+    list.append(str)
+    return status.HTTP_200_OK
+
+@app.get("/save/{string}")
+def read_current_user(string: str):
+    if string in list:
+        return status.HTTP_301_MOVED_PERMANENTLY
+    return status.HTTP_404_NOT_FOUND
+
+@app.delete("/save/{string}")
+def read_current_user(string: str):
+    for i in list:
+        if i == string:
+            list.remove(i)
+    return status.HTTP_404_NOT_FOUND
