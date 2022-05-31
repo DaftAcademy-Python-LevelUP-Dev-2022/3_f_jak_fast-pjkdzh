@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from requests import Response
 
 app = FastAPI()
 templates = Jinja2Templates("""<html>
@@ -46,8 +47,9 @@ def read_current_user(string: str):
     return status.HTTP_200_OK
 
 @app.get("/save/{string}", status_code=404)
-def read_current_user(string: str):
+def read_current_user(string: str, response:Response):
     if f"{string=}" in list:
+        response.status_code = 301
         return status.HTTP_301_MOVED_PERMANENTLY
     return status.HTTP_404_NOT_FOUND
 
