@@ -17,30 +17,15 @@ def start():
         <h1>The unix epoch started at 1970-01-01</h1>
     </html>
     """
-# def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-#     correct_username = secrets.compare_digest(credentials.username, "tester")
-#     correct_password = secrets.compare_digest(credentials.password, "1990-01-01")
-#     correct_password1 = secrets.compare_digest(credentials.password, "2000-01-01")
-#     if not (correct_password):
-#         if not (correct_password1):
-#             raise HTTPException(
-#                 status_code=status.HTTP_401_UNAUTHORIZED,
-#                 detail="Incorrect email or password",
-#                 headers={"WWW-Authenticate": "Basic"},
-#             )
-#     return credentials.username
-# @app.post("/check", response_class=HTMLResponse)
-# def read_current_user(username: str = Depends(get_current_username)):
-#     return """ <html><h1>Welcome tester! You are 22</h1></html>"""
 
-def fetch_user_age(birth_date_str: str) -> int:
-    try:
-        birth_date = datetime.datetime.strptime(birth_date_str, "%Y-%m-%d")
-    except ValueError:
-        return -1
+def user_age(date: str) -> int:
+    # try:
+    birth_date = datetime.datetime.strptime(date, "%Y-%m-%d")
+    # except ValueError:
+    #     return -1
 
-    if birth_date > datetime.datetime.today():
-        return -1
+    # if birth_date > datetime.datetime.today():
+    #     return null
 
     return (datetime.datetime.today() - birth_date).days // 365
 
@@ -48,7 +33,7 @@ def fetch_user_age(birth_date_str: str) -> int:
 @app.post("/check", response_class=HTMLResponse)
 def login(request: Request, credentials: HTTPBasicCredentials = Depends(security)):
     name = credentials.username
-    age = fetch_user_age(credentials.password)
+    age = user_age(credentials.password)
 
     if age < 16:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
@@ -69,8 +54,8 @@ def info(request: Request, format=None):
 
     elif format.lower() == 'html':
         return templates.TemplateResponse(
-            name='user_agent_response.html.j2',
-            context={'request': request, 'user_agent': request.headers.get('User-Agent')}
+            name='format.html.j2',
+            context={'request': request, 'value': request.headers.get('User-Agent')}
         )
 
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Wrong format')
