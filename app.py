@@ -40,18 +40,18 @@ def read_current_user(username: str = Depends(get_current_username)):
     return """ <html><h1>Welcome tester! You are 22</h1></html>"""
 
 
-@app.put("/save/{string}", response_class=HTMLResponse, status_code=200)
+@app.put("/save/{string}", status_code=200)
 def read_current_user(string: str):
     list.append(f"{string=}")
     return status.HTTP_200_OK
 
-@app.get("/save/{string}", response_class=HTMLResponse, status_code=404)
+@app.get("/save/{string}", status_code=404)
 def read_current_user(string: str):
     if f"{string=}" in list:
         return status.HTTP_301_MOVED_PERMANENTLY
     return status.HTTP_404_NOT_FOUND
 
-@app.delete("/save/{string}", response_class=HTMLResponse, status_code=404)
+@app.delete("/save/{string}", status_code=404)
 def read_current_user(string: str):
     for i in list:
         if i == f"{string=}":
