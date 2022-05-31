@@ -43,7 +43,7 @@ def read_current_user(username: str = Depends(get_current_username)):
 from typing import List
 from fastapi import FastAPI, Query
 
-@app.get("/info/")
+@app.get("/info")
 def read_items(format: str):
     query_items = {"user_agent": format}
     return query_items
