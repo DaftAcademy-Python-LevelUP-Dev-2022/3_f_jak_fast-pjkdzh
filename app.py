@@ -60,9 +60,10 @@ def read_current_user(string: str, response:Response):
         return status.HTTP_301_MOVED_PERMANENTLY
     return status.HTTP_404_NOT_FOUND
 
-@app.delete("/save/{string}", status_code=404)
-def read_current_user(string: str):
+@app.delete("/save/{string}", status_code=301)
+def read_current_user(string: str, response:Response):
     for i in list:
         if i == f"{string=}":
             list.remove(i)
+    response.status_code = 404
     return status.HTTP_404_NOT_FOUND
