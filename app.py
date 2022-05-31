@@ -6,6 +6,8 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from starlette.responses import RedirectResponse
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 security = HTTPBasic()
@@ -68,7 +70,7 @@ def read_current_user(string: str):
 @app.get("/save/{string}", status_code=404)
 def read_current_user(string: str):
     if f"{string=}" in list:
-        return status.HTTP_301_MOVED_PERMANENTLY
+        return RedirectResponse(url='/info', status_code=status.HTTP_301_MOVED_PERMANENTLY)
     return status.HTTP_404_NOT_FOUND
 
 @app.delete("/save/{string}", status_code=404)
