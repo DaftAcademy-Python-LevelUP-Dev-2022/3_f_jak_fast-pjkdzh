@@ -39,14 +39,11 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
 @app.post("/check", response_class=HTMLResponse)
 def read_current_user(username: str = Depends(get_current_username)):
     return """ <html><h1>Welcome tester! You are 22</h1></html>"""
-
-from typing import List
-from fastapi import FastAPI, Query
-
-@app.get("/info")
-def read_items(format: str):
-    query_items = {"user_agent": format}
-    return query_items
+#
+# @app.get("/info")
+# def read_items(format: str):
+#     query_items = {"user_agent": format}
+#     return query_items
 
 @app.put("/save/{string}", status_code=200)
 def read_current_user(string: str):
