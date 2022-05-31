@@ -73,7 +73,7 @@ def read_current_user(string: str):
         return RedirectResponse(url='/info', status_code=status.HTTP_301_MOVED_PERMANENTLY)
     return status.HTTP_404_NOT_FOUND
 
-@app.delete("/save/{string}", status_code=404)
+@app.delete("/save/{string}", status_code=200)
 def read_current_user(string: str):
     for i in list:
         if i == f"{string=}":
